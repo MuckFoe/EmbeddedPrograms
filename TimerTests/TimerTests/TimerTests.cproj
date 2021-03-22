@@ -210,6 +210,9 @@
     <Compile Include="src\pcm_sample.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\piezoTest.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\soundGenerator.c">
       <SubType>compile</SubType>
     </Compile>

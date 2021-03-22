@@ -9,6 +9,7 @@ Plays an 8bit/8000 sample PCM audio on OC1A output
 #include "pcm_sample.h"
 #include <avr/interrupt.h>
 #define SAMPLE_RATE 8000;
+#define _BV(n) (1 << n)
 
 volatile uint16_t sample;
 int sample_count;
@@ -17,21 +18,21 @@ int sample_count;
 void pwm_init(void)
 {
 	/* use OC1A pin as output */
-	DDRD = (1 << PD5);
+	DDRD = _BV(PD5);
 
 	/*
 	* clear OC1A on compare match
 	* set OC1A at BOTTOM, non-inverting mode
 	* Fast PWM, 8bit
 	*/
-	TCCR1A = (1<<COM1A1) | (1<<WGM10);
+	TCCR1A = _BV(COM1A1) | _BV(WGM10);
 	
 	/*
 	* Fast PWM, 8bit
 	* Prescaler: clk/1 = 8MHz
 	* PWM frequency = 8MHz / (255 + 1) = 31.25kHz
 	*/
-	TCCR1B = (1<<WGM12) | (1<<CS10);
+	TCCR1B = _BV(WGM12) | _BV(CS10);
 	
 	/* set initial duty cycle to zero */
 	OCR1A = 0;
@@ -46,7 +47,7 @@ void pwm_init(void)
 }
 
 
-
+/**
 ISR(TIMER0_OVF_vect)
 {
 	
@@ -58,13 +59,15 @@ ISR(TIMER0_OVF_vect)
 		if(sample>pcm_length)sample=0;
 	}
 }
+*/
 
 
-
+/**
 int main(void)
 {
+	DDRB = 0xFF;
+	PORTB = 0x00;
 	pwm_init();
 	while(1);//do nothing
 }
-
-
+*/
