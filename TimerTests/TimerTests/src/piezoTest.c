@@ -33,39 +33,29 @@
   #define SPEAKER_DDR DDRC
   #define SPEAKER_PIN 7
   
-  // My Prototype is simply called PLAYNOTE.
   void PLAYNOTE(float duration, float frequency);
   
   
-void fakeDelay(uint16_t t) {
-	while(t > 0) {
-		_delay_ms(1);
-		t--;
-	}
-	return;
-}
+  // function that wraps delay to delay a custom amount of time 
+  // the amount of time is stored in a variable
+  // ToDo: change to compute with modulo for maybe less cycles?
+  void fakeDelay(uint16_t t) {
+	  while(t > 0) {
+		  _delay_ms(1);
+		  t--;
+	  }
+	  return;
+  }
   
   int main(void)
   {
-	  
-	  PLAYNOTE(8000,200);  // Musical note 880 Hz
-	  _delay_ms(1000);
-	  PLAYNOTE(8000,932);
-	  _delay_ms(1000);
-	  PLAYNOTE(8000,2000);
-	  _delay_ms(1000);
-	  PLAYNOTE(400,1047);
-	  PLAYNOTE(400,1109);
-	  PLAYNOTE(400,1175);
-	  PLAYNOTE(400,1244);
-	  PLAYNOTE(400,1319);
-	  PLAYNOTE(400,1397);
-	  PLAYNOTE(400,1480);
-	  PLAYNOTE(400,1568);
-	  _delay_ms(1000);
-	  PLAYNOTE(400,1660);  // Musical note 1660 Hz
-	  
+	  PLAYNOTE(8000,20);
+	  _delay_ms(2000);
+	  PLAYNOTE(8000,50);
+	  _delay_ms(2000);
+	  PLAYNOTE(8000,100);
   }
+  
   
   // ---------------------------------------
   // The PLAYNOTE function must be given the
@@ -74,8 +64,6 @@ void fakeDelay(uint16_t t) {
   // is played for. The frequency value
   // determines the musical note.
   // ---------------------------------------
-  
-  
   void PLAYNOTE(float duration, float frequency)
   {
 	  // Physics variables
@@ -83,34 +71,33 @@ void fakeDelay(uint16_t t) {
 	  volatile float half_period;
 	  float wavelength;
 	  
-	  wavelength=(1/frequency)*1000;
-	  // Standard physics formula.
-	  cycles=duration/wavelength;
-	  // The number of cycles.
-	  half_period = wavelength/2;
-	  // The time between each toggle.
 	  
+	  // Standard physics formula.
+	  wavelength=(1/frequency)*1000;
+	  
+	  // The number of cycles.
+	  cycles=duration/wavelength;
+	  
+	  // The time between each toggle
+	  half_period = wavelength/2;
+
 	  // Data direction register Pin 7
 	  // is set for output.
 	  SPEAKER_DDR |= (1 << SPEAKER_PIN);
 	  
-	  for (i=0;i<cycles;i++)
 	  // The output pin 7 is toggled
 	  // for the 'cycles'number of times.
-	  // --------------------------------
+	  for (i=0;i<cycles;i++)
 	  
 	  {
-		  fakeDelay(half_period);
-		  // Wait 1 half wavelength.
-		  SPEAKER_PORT |= (1 << SPEAKER_PIN);
-		  // Output 5 V to port Pin 7.
-		  fakeDelay(half_period);
-		  // Wait 1 half wavelength.
-		  SPEAKER_PORT &= ~(1 << SPEAKER_PIN);
-		  // 0 V at port pin 7.
+		  fakeDelay(half_period); // Wait 1 half wavelength.
+		  
+		  SPEAKER_PORT |= (1 << SPEAKER_PIN); // Output 5 V to port Pin 7.
+		  
+		  fakeDelay(half_period); // Wait 1 half wavelength.
+		  
+		  SPEAKER_PORT &= ~(1 << SPEAKER_PIN); // 0 V at port pin 7.
+		  
 	  }
-	  
-	  return;
-	  // Return to main()
-	  
+	  return; 
   }
