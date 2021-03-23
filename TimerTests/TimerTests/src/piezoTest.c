@@ -34,27 +34,29 @@
   #define SPEAKER_PIN 7
   
   void PLAYNOTE(float duration, float frequency);
+  void fakeDelay(uint16_t timeToDelay);
   
   
-  // function that wraps delay to delay a custom amount of time 
+  // function that wraps delay to delay a custom amount of time
   // the amount of time is stored in a variable
   // ToDo: change to compute with modulo for maybe less cycles?
-  void fakeDelay(uint16_t t) {
-	  while(t > 0) {
+  void fakeDelay(uint16_t timeToDelay) {
+	  while(timeToDelay > 0) {
 		  _delay_ms(1);
-		  t--;
+		  timeToDelay--;
 	  }
 	  return;
   }
   
+  /**
   int main(void)
   {
-	  PLAYNOTE(8000,20);
-	  _delay_ms(2000);
-	  PLAYNOTE(8000,50);
-	  _delay_ms(2000);
-	  PLAYNOTE(8000,100);
-  }
+  PLAYNOTE(8000,20);
+  _delay_ms(2000);
+  PLAYNOTE(8000,50);
+  _delay_ms(2000);
+  PLAYNOTE(8000,100);
+  }*/
   
   
   // ---------------------------------------
@@ -99,5 +101,5 @@
 		  SPEAKER_PORT &= ~(1 << SPEAKER_PIN); // 0 V at port pin 7.
 		  
 	  }
-	  return; 
+	  return;
   }

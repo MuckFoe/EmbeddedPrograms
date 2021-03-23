@@ -28,10 +28,10 @@
 /*
 * Support and FAQ: visit <a href="https://www.microchip.com/support/">Microchip Support</a>
 */
-#include <asf.h>
-#define F_CPU 8000000UL
-#include <avr/io.h>
-#include <avr/interrupt.h>
+//#include <asf.h>
+//#define F_CPU 8000000UL
+//#include <avr/io.h>
+//#include <avr/interrupt.h>
 /**
 int counter = 0;
 
@@ -60,4 +60,3 @@ ISR(TIMER0_OVF_vect)
 		counter++;
 	}
 }*/
-
