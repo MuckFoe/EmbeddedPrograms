@@ -220,10 +220,19 @@
     <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\music.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\notes.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\sin.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\piezoTest.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\sinSounds.c">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\soundGenerator.c">

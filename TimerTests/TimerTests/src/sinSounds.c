@@ -54,7 +54,7 @@ void InitPWM()
 
    DDRB|=(1<<PB3);
 }
-
+/**
 void main()
 {
    uint8_t i;
@@ -91,4 +91,4 @@ void main()
       }
 
    }
-}
+}*/
