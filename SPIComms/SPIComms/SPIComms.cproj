@@ -209,10 +209,22 @@
     <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\SdC.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\SdC.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Spisd.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\Spisd.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="src\UART.h">
+    <Compile Include="src\Usart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Usart.h">
       <SubType>compile</SubType>
     </Compile>
     <None Include="src\asf.h">

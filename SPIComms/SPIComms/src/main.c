@@ -2,7 +2,8 @@
 #include <avr/io.h>
 #include <Spisd.h>
 #include <util/delay.h>
-#include <UART.h>
+#include <Usart.h>
+#include "SdC.h"
 #define F_CPU 8000000 ML
 
 /*
@@ -11,8 +12,6 @@ MOSI = PB5
 SCK = PB7
 SS = PB4
 */
-
-
 
 void SPI_MasterInit(void) {
 	//*Set MOSI, SCK, SS output 
@@ -42,6 +41,37 @@ char SPI_SlaveReceive(void) {
 }
 
 
+/*
+void reset_sdcard(void){
+	DDRB = (1<<EN1);
+	PORTB = (1<<EN1);
+	_delay_ms(50);
+	PORTB = (0<<EN1);
+}*/
+
+void power_on_sdcard(void){
+	DDRB = (1<<EN2);
+	PORTB = (1<<EN2);
+	_delay_ms(50);
+}
+
+void reset_sdcard(){
+	DDRB = (1<<EN1);
+	DDRB = (1<<EN2);
+	PORTB = (1<<EN1);
+	PORTB &= ~(1<<EN2);
+	_delay_ms(50);
+	PORTB &= ~(1<<EN1); 
+	PORTB = (1<<EN2);
+}
+
+void sanity(){
+	DDRA = (1<<LED);
+	PORTA = (1<<LED);
+	
+	_delay_ms(2000);
+	PORTA &= ~(1<<LED); 
+}
 //Send a command to the SD card
 //Input: uint8_t cmd command
 //      uint32_t arg command parameters
@@ -49,8 +79,6 @@ char SPI_SlaveReceive(void) {
 //Return value: the response returned by SD card
 uint8_t SdSendCmd(uint8_t cmd, uint32_t arg, uint8_t crc)
 {
-	uint8_t r1;
-	uint8_t Retry=0;
 	
 	SPI_MasterTransmit(cmd | 0x40);//Write commands separately
 	SPI_MasterTransmit(arg >> 24);
@@ -65,19 +93,34 @@ uint8_t SdSendCmd(uint8_t cmd, uint32_t arg, uint8_t crc)
 
 int main (void)
 {
+	USART_Init();
+	usart_setup_stdio_stream();
 	DDRA = (1<<LED);
-	//DDRC = 0xFF;
+	DDRC = 0xFF;
 	//DDRB = (1<<DDB0);
 
-	
-	//PORTC = 0x00;
+	PORTA = 0x00;
+	PORTC = 0x00;
 
-	printLog("InitMaster");
+	/*
+	printf("InitMaster \r\n");
 	SPI_MasterInit();
-	printLog("StartingTransmition");
-	printLog(SdSendCmd(cmd0, 0x0000, 0x95));
-	
 
+	power_on_sdcard();
+	//reset_sdcard();
+	//sanity();
+	printf("StartingTransmition \r\n");
+	
+	printf(SdSendCmd(cmd0, 0x0000, 0x95));
+	printf("\r\n");
+	
+	printf(SdSendCmd(cmd1, 0x0000, 0x95));
+	printf("\r\n");
+	printf(SdSendCmd(cmd0, 0x0000, 0x95));
+	printf("\r\n");
+	*/
+	spi_init_master();
+	printf( "Test= 0x%02x \n ", sd_init() );
 }
 
 
