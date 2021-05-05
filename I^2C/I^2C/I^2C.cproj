@@ -207,6 +207,18 @@
     <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\eeProm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\eeProm.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\twi.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\twi.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\twiStatusCodes.h">
       <SubType>compile</SubType>
     </Compile>
