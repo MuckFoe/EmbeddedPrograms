@@ -1,0 +1,35 @@
+/**
+#include <avr/io.h>
+#include <avr/interrupt.h>
+
+unsigned int OVF_CNT = 0;
+unsigned int NOTEN_CNT = 0;
+unsigned int takt = 2; // Sekunde / takt = Tondauer
+unsigned int sine_value[25] = {128,150,172,192,210,226,255,226,210,192,172,150,128,105,84,64,45,30,0,30,45,64,84,105,128};
+	
+int main(void) {
+	
+	DDRB |= (1<<PB3);  // declare PORTB as output
+	
+	//TCCR0 /*Timer Counter Control register */|= (1<<WGM00)/* Wave form generation module*/|(1<<WGM01)/* Wave form generation module*/|(1<<CS00)/* compare output mode|(1<<CS00); // clock select
+	TCCR0 = (1<<CS01); // Timer0 configuration, Prescaler = 8
+	TIMSK |= (1<<TOIE0); // When the TOIE0 bit is written to one, and the I-bit in the Status Register is set (one), the Timer/Counter0 Overflow interrupt is enabled.
+	sei();
+	
+	while(1) {
+		
+	}
+}
+
+Der Overflow Interrupt Handler wird aufgerufen, wenn TCNT0 von 255 auf 0 wechselt 
+ISR(TIMER0_OVF_vect) {
+	
+	OVF_CNT++;
+	if(OVF_CNT == (3906 / takt)) {
+		OVF_CNT = 0;
+		PORTB = sine_value[NOTEN_CNT];
+		NOTEN_CNT++; // nächste note
+	}
+	
+}
+*/

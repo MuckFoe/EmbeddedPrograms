@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Atmel Studio Solution File, Format Version 11.00
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "LEDTest", "AmtelStuff\LEDTest.cproj", "{DCE6C7E3-EE26-4D79-826B-08594B9AD897}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "ClockTest", "ClockStuff\ClockTest.cproj", "{E958CA04-6548-45D5-94F0-353BDE3629C5}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "SpeakerTest", "playmusic\SpeakerTest.cproj", "{92791C9D-FB8B-4880-8552-7FD3A38F89AF}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "UltrasonicSensorTest", "UltrasonicSensorTest\UltrasonicSensorTest.cproj", "{3A4C8DAE-46B8-42D2-86A2-6C4A30651DF2}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "UARTcommunication", "UARTcommunication\UARTcommunication.cproj", "{38847014-629A-402D-8A46-46C3928111EF}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "ConsoleOut", "ConsoleOut\ConsoleOut.cproj", "{0B2B73B1-B856-4009-A6DB-D62966020B1A}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "SDCard", "SDCard\SDCard.cproj", "{EEE7D3C6-7354-4DAF-B55D-E6E2F2FECD22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Debug|AVR.ActiveCfg = Debug|AVR
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Debug|AVR.Build.0 = Debug|AVR
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Release|AVR.ActiveCfg = Release|AVR
+		{DCE6C7E3-EE26-4D79-826B-08594B9AD897}.Release|AVR.Build.0 = Release|AVR
+		{E958CA04-6548-45D5-94F0-353BDE3629C5}.Debug|AVR.ActiveCfg = Debug|AVR
+		{E958CA04-6548-45D5-94F0-353BDE3629C5}.Debug|AVR.Build.0 = Debug|AVR
+		{E958CA04-6548-45D5-94F0-353BDE3629C5}.Release|AVR.ActiveCfg = Release|AVR
+		{E958CA04-6548-45D5-94F0-353BDE3629C5}.Release|AVR.Build.0 = Release|AVR
+		{92791C9D-FB8B-4880-8552-7FD3A38F89AF}.Debug|AVR.ActiveCfg = Debug|AVR
+		{92791C9D-FB8B-4880-8552-7FD3A38F89AF}.Debug|AVR.Build.0 = Debug|AVR
+		{92791C9D-FB8B-4880-8552-7FD3A38F89AF}.Release|AVR.ActiveCfg = Release|AVR
+		{92791C9D-FB8B-4880-8552-7FD3A38F89AF}.Release|AVR.Build.0 = Release|AVR
+		{3A4C8DAE-46B8-42D2-86A2-6C4A30651DF2}.Debug|AVR.ActiveCfg = Debug|AVR
+		{3A4C8DAE-46B8-42D2-86A2-6C4A30651DF2}.Debug|AVR.Build.0 = Debug|AVR
+		{3A4C8DAE-46B8-42D2-86A2-6C4A30651DF2}.Release|AVR.ActiveCfg = Release|AVR
+		{3A4C8DAE-46B8-42D2-86A2-6C4A30651DF2}.Release|AVR.Build.0 = Release|AVR
+		{38847014-629A-402D-8A46-46C3928111EF}.Debug|AVR.ActiveCfg = Debug|AVR
+		{38847014-629A-402D-8A46-46C3928111EF}.Debug|AVR.Build.0 = Debug|AVR
+		{38847014-629A-402D-8A46-46C3928111EF}.Release|AVR.ActiveCfg = Release|AVR
+		{38847014-629A-402D-8A46-46C3928111EF}.Release|AVR.Build.0 = Release|AVR
+		{0B2B73B1-B856-4009-A6DB-D62966020B1A}.Debug|AVR.ActiveCfg = Debug|AVR
+		{0B2B73B1-B856-4009-A6DB-D62966020B1A}.Debug|AVR.Build.0 = Debug|AVR
+		{0B2B73B1-B856-4009-A6DB-D62966020B1A}.Release|AVR.ActiveCfg = Release|AVR
+		{0B2B73B1-B856-4009-A6DB-D62966020B1A}.Release|AVR.Build.0 = Release|AVR
+		{EEE7D3C6-7354-4DAF-B55D-E6E2F2FECD22}.Debug|AVR.ActiveCfg = Debug|AVR
+		{EEE7D3C6-7354-4DAF-B55D-E6E2F2FECD22}.Debug|AVR.Build.0 = Debug|AVR
+		{EEE7D3C6-7354-4DAF-B55D-E6E2F2FECD22}.Release|AVR.ActiveCfg = Release|AVR
+		{EEE7D3C6-7354-4DAF-B55D-E6E2F2FECD22}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
