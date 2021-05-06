@@ -17,6 +17,8 @@ Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "ConsoleOut", "ConsoleOut\Co
 EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "SDCard", "SDCard\SDCard.cproj", "{EEE7D3C6-7354-4DAF-B55D-E6E2F2FECD22}"
 EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "I^2C", "I^2C\I^2C\I^2C.cproj", "{B11C3F08-20AF-4C33-9803-46A0AD3D4CF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -51,6 +53,10 @@ Global
 		{EEE7D3C6-7354-4DAF-B55D-E6E2F2FECD22}.Debug|AVR.Build.0 = Debug|AVR
 		{EEE7D3C6-7354-4DAF-B55D-E6E2F2FECD22}.Release|AVR.ActiveCfg = Release|AVR
 		{EEE7D3C6-7354-4DAF-B55D-E6E2F2FECD22}.Release|AVR.Build.0 = Release|AVR
+		{B11C3F08-20AF-4C33-9803-46A0AD3D4CF4}.Debug|AVR.ActiveCfg = Debug|AVR
+		{B11C3F08-20AF-4C33-9803-46A0AD3D4CF4}.Debug|AVR.Build.0 = Debug|AVR
+		{B11C3F08-20AF-4C33-9803-46A0AD3D4CF4}.Release|AVR.ActiveCfg = Release|AVR
+		{B11C3F08-20AF-4C33-9803-46A0AD3D4CF4}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -160,7 +160,7 @@ uint8_t SDRead_r1( void )
 		printf( "... R1-Result = 0x%02x \r\n", r1_result );
 
 		terminate++;
-	} while( (r1_result == 0xff) && (terminate < 8) || terminate > 100);	// abort loop if no response is received for 8 bytes or the result is not equal to 0xff
+	} while( (r1_result == 0xff) && (terminate < 8));	// abort loop if no response is received for 8 bytes or the result is not equal to 0xff
 
 	return r1_result;
 }
