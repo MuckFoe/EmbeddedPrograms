@@ -1,5 +1,5 @@
-#ifndef __SPISD_H_
-#define __SPISD_H_
+#ifndef __SPI_H_
+#define __SPI_H_
 #include <avr/io.h>
 
 

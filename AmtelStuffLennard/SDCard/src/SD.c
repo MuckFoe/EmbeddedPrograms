@@ -53,11 +53,11 @@ uint8_t initSD( void )
 	// Chapter 6.4. Power Scheme -> In case of SPI host, CMD0 shall be the first command to send the card to SPI mode.
 	while( (result[0] = SD_CMD_with_r1_Response( CMD0 )) != SD_IDLE_STATE )		// CMD0 --> Answer is a R1-Response [SD Spec Chapter 7.3.2.1 Format R1]
 	{
-		printf( "Answer CMD0: 0x%02x \n ", result[0] );
+		printf( "Answer CMD0: 0x%02x \r\n ", result[0] );
 		terminate++;
 		if( terminate > 20 ) return SD_ERROR;	// failed
 	}
-	printf( "Result CMD0 (GO_IDLE_STATE): 0x%02x \n\n ", result[0] );
+	printf( "... Result CMD0 (GO_IDLE_STATE): 0x%02x \r\n ", result[0] );
 
 	// Send Interface Condition Command -> Card has to be in idle state -> checks voltage
 	// SD Spec Chapter 4.3.13 Send Interface Condition Command (CMD8)
@@ -93,7 +93,7 @@ uint8_t initSD( void )
 	SDSendCMD58( result );	// CMD58 read OCR (Output Compare Register)
 
 
-	printf("Init SD successfull \n");
+	printf("Init SD successfull \r\n");
 
 	return SD_RUNNING;
 }
@@ -140,7 +140,7 @@ void initTimer0( void )
 
 void SDSendCMD( uint8_t *cmd )
 {	
-	printf( "Send Command \n" );
+	printf( "Send Command \r\n" );
 
 	for( uint8_t i = 0; i < 6; ++i )
 		SPITransmit( cmd[i] );	
@@ -150,17 +150,17 @@ void SDSendCMD( uint8_t *cmd )
 
 uint8_t SDRead_r1( void )
 {
-	printf( "Start reading R1 result \n" );
+	printf( "Start reading R1 result \r\n" );
 
-	uint8_t r1_result, terminate_counter = 0;
+	uint8_t r1_result, terminate = 0;
 
 	do {
 		SPITransmit( 0xff );
 		r1_result = SPIReceive();		// run loop till actual data is received
-		printf( "---> R1-Result = 0x%02x \n", r1_result );
+		printf( "... R1-Result = 0x%02x \r\n", r1_result );
 
-		terminate_counter++;
-	} while( (r1_result == 0xff) && (terminate_counter < 8) );	// abort loop if no response is received for 8 bytes or the result is not equal to 0xff
+		terminate++;
+	} while( (r1_result == 0xff) && (terminate < 8) || terminate > 100);	// abort loop if no response is received for 8 bytes or the result is not equal to 0xff
 
 	return r1_result;
 }
@@ -168,7 +168,7 @@ uint8_t SDRead_r1( void )
 
 void SDRead_r3( uint8_t *result )
 {
-	printf( "R3-Result is called \n" );
+	printf( "R3-Result is called \r\n" );
 
 	SDRead_r7( result );	// forward to r7-response method
 }
@@ -176,10 +176,10 @@ void SDRead_r3( uint8_t *result )
 
 void SDRead_r7( uint8_t *result )
 {
-	printf( "Start reading R7 result \n" );
+	printf( "Start reading R7 result \r\n" );
 
 	result[0] = SDRead_r1();	// 1 byte R1 response token
-	printf( "---> R7-Result[0] = 0x%02x \n", result[0] );
+	printf( "... R7-Result[0] = 0x%02x \r\n", result[0] );
 
 	if( result[0] > 1 ) return;		// if R1-Response has an error
 
@@ -188,14 +188,14 @@ void SDRead_r7( uint8_t *result )
 	{
 		SPITransmit( 0xff );
 		result[i] = SPIReceive();		
-		printf( "---> R7-Result[%i] = 0x%02x \n", i, result[i] );
+		printf( "... R7-Result[%i] = 0x%02x \r\n", i, result[i] );
 	}
 }
 
 
 uint8_t SD_CMD_with_r1_Response( uint8_t *cmd )
 {
-	printf( "Start sending command with r1 response \n" );
+	printf( "Start sending command with r1 response \r\n" );
 
 	// Enable Chip Select (CS)
 	SPITransmit( 0xff );
@@ -217,7 +217,7 @@ uint8_t SD_CMD_with_r1_Response( uint8_t *cmd )
 
 void SDSendCMD8( uint8_t *result )
 {
-	printf( "Start sending if_cond (CMD8) \n" );
+	printf( "Start sending if_cond (CMD8) \r\n" );
 
 	// Enable Chip Select (CS)
 	SPITransmit( 0xff );
@@ -237,7 +237,7 @@ void SDSendCMD8( uint8_t *result )
 
 void SDSendCMD58( uint8_t *result )
 {
-	printf( "Start sending read_ocr (CMD58) \n" );
+	printf( "Start sending read_ocr (CMD58) \r\n" );
 
 	// Enable Chip Select (CS)
 	SPITransmit( 0xff );

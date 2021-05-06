@@ -10,7 +10,7 @@ void initMaster( void )
 	// SPI Control Register: activate SPE (SPI enable) and set MSTR -> Master Mode (Master/Slave select) and set clock rate fosc/64
 	SPCR = (1 << SPE) | (1 << MSTR) | (1 << SPR1);
 
-	printf( "Init SPI Master complete\n" );
+	printf( "Init SPI Master complete\r\n" );
 }
 
 void SPITransmit( uint8_t data )

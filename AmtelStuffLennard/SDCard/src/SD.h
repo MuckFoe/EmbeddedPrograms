@@ -1,5 +1,5 @@
-#ifndef SD_CARD_H_
-#define SD_CARD_H_
+#ifndef SD_H_
+#define SD_H_
 #include "SPI.h"
 
 // Pins for SD-Card Holder
