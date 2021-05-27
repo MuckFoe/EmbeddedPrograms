@@ -136,14 +136,12 @@ void therm_read_temperature(){
 	temperature[0]=therm_read_byte();
 	temperature[1]=therm_read_byte();
 	therm_reset();
-	//Store temperature integer digits and decimal digits
-	digit=temperature[0]>>4;
-	digit|=(temperature[1]&0x7)<<4;
-	//Store decimal digits
-	decimal=temperature[0]&0xf;
-	decimal*=THERM_DECIMAL_STEPS_12BIT;
-	//Format temperature into a string [+XXX.XXXX C]
-	printf("%+d.%04u C\r\n", digit, decimal);
+	
+	//The temperature sensor output has 9-bit resolution, which corresponds to 0.5°C steps
+	int number = temperature[0] | temperature[1] << 8;
+	double result = number * 0.5;
+
+	printf("%f C\r\n", result);
 }
 
 
