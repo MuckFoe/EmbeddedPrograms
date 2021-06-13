@@ -42,7 +42,7 @@ int main( void )
 	}
 	
 	uint8_t buffer[512];
-	for( int i = 0; i > 512; i++ )
+	for( int i = 0; i < 512; i++ )
 	buffer[i] = i;
 	buffer[511] = 0x00;
 
@@ -51,11 +51,12 @@ int main( void )
 	uint8_t buffer2[512];
 	SDReadSingleBlock( buffer2 );
 
-	for( int i = 0; i < 512; i++ )
+	for( int i = 511; i >= 0; i-- )
 	{
 		if(i % 10 == 0) printf("\r\n");
 		PORTC = ~buffer2[i];
-		printf( "0x%x ", PINC );
+		printf( "%d ", PINC );
+		_delay_ms(1000);
 	}
 	
 

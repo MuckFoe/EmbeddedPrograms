@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "twi.h"
+#include "twiStatusCodes.h"
 
 // immer 8 bit = 1, 0, 1, 0, a2, a1, p0, (1 = r/ 0 = w)
 #define SLA_W 0b10100000 //slave write bit

@@ -106,6 +106,8 @@ uint8_t SDRead_r1( void );
  *
  *	@param result	Byte array that holds 5 Byte of R3-Response
  */
+
+
 void SDRead_r3( uint8_t *result );
 
 /**
