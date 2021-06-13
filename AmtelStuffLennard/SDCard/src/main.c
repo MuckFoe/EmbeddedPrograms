@@ -13,7 +13,7 @@ uint8_t init() {
 	
 	USART_Init();
 	usart_setup_stdio_stream();
-		
+	
 	initMaster();
 	
 	return initSD();
@@ -24,17 +24,18 @@ int main( void )
 	uint8_t status = 0;
 
 	status = init();
+	if( status == CARD_DETECTION_FAIL )
+	{
+		printf( "No SD-Card" );
+		return 1;
+	}
 	
 	if( status == WRITE_PROTECTION_FAIL )
 	{
 		printf( "write protected" );
 		return 1;
 	}
-	if( status == CARD_DETECTION_FAIL )
-	{
-		printf( "No SD-Card" );
-		return 1;
-	}
+
 	if( status == SD_ERROR )
 	{
 		printf( "Error during initialization" );
