@@ -23,6 +23,8 @@ Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "OneWire", "OneWire\OneWire.
 EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "BlueTooth", "BlueTooth\BlueTooth.cproj", "{8346D5DF-75E7-4123-85FB-BC08F13CA59C}"
 EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "WiFi", "WiFi\WiFi.cproj", "{EA3EF8BC-8106-4B31-BF12-7CBA9D1DF15C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -69,6 +71,10 @@ Global
 		{8346D5DF-75E7-4123-85FB-BC08F13CA59C}.Debug|AVR.Build.0 = Debug|AVR
 		{8346D5DF-75E7-4123-85FB-BC08F13CA59C}.Release|AVR.ActiveCfg = Release|AVR
 		{8346D5DF-75E7-4123-85FB-BC08F13CA59C}.Release|AVR.Build.0 = Release|AVR
+		{EA3EF8BC-8106-4B31-BF12-7CBA9D1DF15C}.Debug|AVR.ActiveCfg = Debug|AVR
+		{EA3EF8BC-8106-4B31-BF12-7CBA9D1DF15C}.Debug|AVR.Build.0 = Debug|AVR
+		{EA3EF8BC-8106-4B31-BF12-7CBA9D1DF15C}.Release|AVR.ActiveCfg = Release|AVR
+		{EA3EF8BC-8106-4B31-BF12-7CBA9D1DF15C}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,7 +5,7 @@
  */ 
 
 #include <avr/io.h>
-#include "Usart.h"	/* include USART library */
+#include "Usart.c"	/* include USART library */
 
 #define LED PORTB		/* connected LED on PORT pin */
 
@@ -13,19 +13,20 @@ int main(void)
 {
 	char Data_in;
 	DDRB = 0xff;		/* make PORT as output port */
-	USART_Init(9600);	/* initialize USART with 9600 baud rate */
-	LED = 0;
+	USART_Init();	/* initialize USART with 9600 baud rate */
+	LED = 1; /* LED off */
 	
 	while(1)
 	{
 		Data_in = USART_Receive();	/* receive data from Bluetooth device*/
-		if(Data_in =='1')
+		
+		if(Data_in == 1 || Data_in == '1')
 		{
 			LED |= (1<<PB0);	/* Turn ON LED */
 			USART_putstring("LED_ON");/* send status of LED i.e. LED ON */
 			
 		}
-		else if(Data_in =='2')
+		else if(Data_in =='2' || Data_in == 2)
 		{
 			LED &= ~(1<<PB0);	/* Turn OFF LED */
 			USART_putstring("LED_OFF"); /* send status of LED i.e. LED OFF */

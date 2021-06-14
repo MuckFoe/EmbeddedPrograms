@@ -1,70 +1,61 @@
 /*
- * Usart.c
+ * Example: USART_AVR
+ * Target: ATmega32/ATmega32A
+ * Frequency: 8 MHz Fuse: LFUSE=0xFF HFUSE=0x99
+ * NOTE: Make sure to burn right fuse bits after loading USART_AVR.hex file to MCU. 
+ * Remember Tx of FT232RL Adapter is connected to RXD and Rx connected to TXD of ATmega32A. 
  *
- * Created: 30/04/2021 15:19:23
- *  Author: Moe
- */ 
+*/
+#define F_CPU 8000000UL
 #include <avr/io.h>
-#include <avr/interrupt.h>
-#include <stdio.h>
-#include "Usart.h"
+#include <util/delay.h>
+#define BAUDRATE 9600
+#define BAUDDINGS 52
+#define BAUD_PRESCALLER (((F_CPU / (BAUDRATE * 16UL))) - 1)
 
-// Global Variables for printf
-static FILE mystdout = FDEV_SETUP_STREAM(usart_putchar_printf, NULL, _FDEV_SETUP_WRITE);
+//Declaration of our functions
+void USART_init(void);
+unsigned char USART_receive(void);
+void USART_send( unsigned char data);
+void USART_putstring(char* StringPtr);
 
-void USART_Init() {
-	UBRRH = (unsigned char) ( UBBR_BAUD >> 8 );			// Set Baudrate for High Register
-	UBRRL = (unsigned char) UBBR_BAUD;					// Set Baudrate for Low Register
-	UCSRB = (1 << RXEN) | (1 << TXEN) ;	// Enable Rx and Tx and Interrupt for Rx
-	UCSRC = (1 << URSEL) | (1 << UCSZ1) | (1 << UCSZ0);	// USREL = 1 to write to URSRC, Set frame 8-Bit Charakter-Size
+
+
+int main(void){
+  USART_init();                     // Call the USART initialization code
+  
+  while(1){
+//	  PORTB = 0xFF;           
+	  USART_putstring("hallo");
+//    PORTB = USART_receive(); // Pass the string to the USART_putstring function and sends it over the serial
+    _delay_ms(2000);       
+  }
+  
+  return 0;
 }
-
-
-// URSEL=1: USCRC, URSEL = 0: UBRRH (initial value)
-void USART_Transmit(uint8_t data) {
-	
-	// Wait for empty transmit buffer
-	while( !( UCSRA & (1<<UDRE)) ) ;
-	
-	
-	UDR = data;// Put data into buffer, sends the data
+/* Initialize USART */
+void USART_init(void){
+	DDRB = 0xFF;
+	PORTB = 0xFF;
+  UBRRH = (uint8_t)(BAUDDINGS>>8);
+  UBRRL = (uint8_t)(BAUDDINGS);
+  UCSRB = (1<<RXEN)|(1<<TXEN);
+  UCSRC = (1<<UCSZ0)|(1<<UCSZ1)|(1<<URSEL);
 }
-uint8_t USART_Receive(void) {
-	
-	while( !(UCSRA & (1<<RXC)) );// Wait for data to be received
-	
-	
-	return UDR;// Get and return received data from buffer
+/* Function to receive byte/char */
+unsigned char USART_receive(void){
+  while(!(UCSRA & (1<<RXC)));
+  return UDR;
 }
-void usart_putchar(unsigned char data) {
-	while (!(UCSRA & (1<<UDRE))) /*Wait for empty transmit buffer */
-	;
-	UDR = data;                  /*Put data into buffer, sends the data */
-}
-
-
-//This function is called by printf as a stream handler
-int usart_putchar_printf(char var, FILE *stream) {
-	usart_putchar(var);
-	return 0;
-}
-/*
- *	Setup stdio stream.
- */
-void usart_setup_stdio_stream( void )
-{
-	stdout = &mystdout; 
-}
-
 /* Function to send byte/char */
 void USART_send( unsigned char data){
-	while(!(UCSRA & (1<<UDRE)));
-	UDR = data;
+  while(!(UCSRA & (1<<UDRE)));
+  UDR = data;
 }
 /* Send string */
 void USART_putstring(char* StringPtr){
-	while(*StringPtr != 0x00){
-		usart_putchar(*StringPtr);
-	StringPtr++;}
-	
+  while(*StringPtr != 0x00){
+    USART_send(*StringPtr);
+  StringPtr++;}
+  
 }
