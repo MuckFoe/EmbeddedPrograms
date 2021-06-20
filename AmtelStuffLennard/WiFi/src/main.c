@@ -11,17 +11,20 @@
 #define SEND_DEMO				/* Define Send demo */
 
 /* Define Required fields shown below */
-#define DOMAIN				"api.thingspeak.com"
+#define DOMAIN				"localhost"
 #define PORT				"80"
-#define API_WRITE_KEY			"thingspeak Write Key"
-#define CHANNEL_ID			"thingspeak Channel ID"
+#define API_WRITE_KEY		"WiFi Write Key"
+#define CHANNEL_ID			"Wifi Channel ID"
 
 #define SSID				"WiFi SSID"
 #define PASSWORD			"WiFi Password"
 
 
 
-#define F_CPU 8000000UL		/* Define CPU Frequency e.g. here its Ext. 12MHz */
+#define BAUDRATE 9600
+#define BAUDDINGS 52
+#define BAUD_PRESCALLER (((F_CPU / (BAUDRATE * 16UL))) - 1)
+#define F_CPU 8000000UL
 #include <avr/io.h>			/* Include AVR std. library file */
 #include <util/delay.h>			/* Include Delay header file */
 #include <stdbool.h>			/* Include standard boolean library */
@@ -29,7 +32,6 @@
 #include <stdio.h>			/* Include standard IO library */
 #include <stdlib.h>			/* Include standard library */
 #include <avr/interrupt.h>		/* Include avr interrupt header file */
-#include "USART_RS232_H_file.h"		/* Include USART header file */
 
 #define SREG    _SFR_IO8(0x3F)
 
@@ -49,18 +51,6 @@
 #define ACCESSPOINT			2
 #define BOTH_STATION_AND_ACCESPOINT	3
 
-/* Select Demo */
-#define RECEIVE_DEMO			/* Define RECEIVE demo */
-//#define SEND_DEMO			/* Define SEND demo */
-
-/* Define Required fields shown below */
-#define DOMAIN				"api.thingspeak.com"
-#define PORT				"80"
-#define API_WRITE_KEY			"C7JFHZY54GLCJY38"
-#define CHANNEL_ID			"119922"
-
-#define SSID				"ssid"
-#define PASSWORD			"password"
 
 enum ESP8266_RESPONSE_STATUS{
 	ESP8266_RESPONSE_WAITING,
@@ -92,6 +82,34 @@ int8_t Response_Status;
 volatile int16_t Counter = 0, pointer = 0;
 uint32_t TimeOut = 0;
 char RESPONSE_BUFFER[DEFAULT_BUFFER_SIZE];
+
+
+/* Initialize USART */
+void USART_init(void){
+	DDRB = 0xFF;
+	PORTB = 0xFF;
+	UBRRH = (uint8_t)(BAUDDINGS>>8);
+	UBRRL = (uint8_t)(BAUDDINGS);
+	UCSRB = (1<<RXEN)|(1<<TXEN);
+	UCSRC = (1<<UCSZ0)|(1<<UCSZ1)|(1<<URSEL);
+}
+/* Function to receive byte/char */
+unsigned char USART_receive(void){
+	while(!(UCSRA & (1<<RXC)));
+	return UDR;
+}
+/* Function to send byte/char */
+void USART_send( unsigned char data){
+	while(!(UCSRA & (1<<UDRE)));
+	UDR = data;
+}
+/* Send string */
+void USART_putstring(char* StringPtr){
+	while(*StringPtr != 0x00){
+		USART_send(*StringPtr);
+	StringPtr++;}
+	
+}
 
 void Read_Response(char* _Expected_Response)
 {
@@ -183,8 +201,8 @@ bool WaitForExpectedResponse(char* ExpectedResponse)
 bool SendATandExpectResponse(char* ATCommand, char* ExpectedResponse)
 {
 	ESP8266_Clear();
-	USART_SendString(ATCommand);		/* Send AT command to ESP8266 */
-	USART_SendString("\r\n");
+	USART_putstring(ATCommand);		/* Send AT command to ESP8266 */
+	USART_putstring("\r\n");
 	return WaitForExpectedResponse(ExpectedResponse);
 }
 
@@ -349,7 +367,7 @@ int main(void)
 	uint8_t Sample = 0;
 	#endif
 
-	USART_Init(115200);			/* Initiate USART with 115200 baud rate */
+	USART_init();			
 	sei();					/* Start global interrupt */
 
 	while(!ESP8266_Begin());
@@ -371,7 +389,7 @@ int main(void)
 		memset(_buffer, 0, 150);
 		sprintf(_buffer, "GET /update?api_key=%s&field1=%d", API_WRITE_KEY, Sample++);
 		ESP8266_Send(_buffer);
-		_delay_ms(15000);	/* Thingspeak server delay */
+		_delay_ms(15000);	
 		#endif
 		
 		#ifdef RECEIVE_DEMO
